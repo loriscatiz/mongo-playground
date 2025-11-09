@@ -1,0 +1,28 @@
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mymongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./mongo-data:/data/db:Z
+    env_file:
+      - .env
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+      - MONGO_INITDB_DATABASE=${MONGO_INITDB_DATABASE}
+
+  # # optional: a service to run your app in docker later
+  # app:
+  #   build: .
+  #   container_name: express_app
+  #   ports:
+  #     - "3000:3000"
+  #   env_file:
+  #     - .env
+  #   environment:
+  #     - MONGO_URI=mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@mongo:27017/${MONGO_INITDB_DATABASE}
+  #   depends_on:
+  #     - mongo
+  #   # For local development you can ignore building app in compose and run node locally instead
